@@ -1,0 +1,27 @@
+{
+  "name": "medmcq-wf-scripts",
+  "version": "1.0.0",
+  "description": "A collection of scripts to help convert WiseFlow exports to a format acceptable to the medmcq website.",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "tsc .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morsby/medmcq-wf-scripts.git"
+  },
+  "author": "morsby",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/morsby/medmcq-wf-scripts/issues"
+  },
+  "homepage": "https://github.com/morsby/medmcq-wf-scripts#readme",
+  "devDependencies": {
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {
+    "colors": "^1.3.3",
+    "find-duplicate-files": "0.0.7"
+  }
+}
