@@ -1,3 +1,7 @@
+build
+convertWiseflow.js
+finishWiseflow.js
+flow-example.json
 # Logs
 logs
 *.log
