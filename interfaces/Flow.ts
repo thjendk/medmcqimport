@@ -1,4 +1,4 @@
-import { Item } from "../utils/splitExport";
+import { Item } from "./Item";
 import {
   Decoder,
   object,
