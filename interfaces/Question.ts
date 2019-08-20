@@ -5,25 +5,27 @@ import {
   array,
   constant,
   number,
-  oneOf
+  oneOf,
+  union,
+  optional
 } from "@mojotech/json-type-validation";
 
 export interface Question {
   data: {
-    options: { label: string; value: "0" | "1" | "2" }[];
+    options: { label: string; value: string }[];
     ui_style: { choice_label: string; type: string };
     stimulus: string;
     type: string;
     validation: {
       scoring_type: "exactMatch";
-      valid_response: { score: 1; value: string[] };
+      valid_response: { score: 1; value: string | string[] };
     };
     score: 1;
-    minScore: 0;
+    minScore: 0 | null | undefined;
   };
   itemId: number;
   maxScore: 1;
-  minScore: 0;
+  minScore: 0 | null | undefined;
   id: number;
 }
 
@@ -33,7 +35,7 @@ export const questionsDecoder: Decoder<Question[]> = array(
       options: array(
         object({
           label: string(),
-          value: oneOf(constant("0"), constant("1"), constant("2"))
+          value: string()
         })
       ),
       ui_style: object({
@@ -46,15 +48,15 @@ export const questionsDecoder: Decoder<Question[]> = array(
         scoring_type: constant("exactMatch"),
         valid_response: object({
           score: constant(1),
-          value: array(oneOf(constant("0"), constant("1"), constant("2")))
+          value: union(array(string()), string())
         })
       }),
       score: constant(1),
-      minScore: constant(0)
+      minScore: optional(oneOf(constant(0), constant(null)))
     }),
     itemId: number(),
     maxScore: constant(1),
-    minScore: constant(0),
+    minScore: optional(oneOf(constant(0), constant(null))),
     id: number()
   })
 );

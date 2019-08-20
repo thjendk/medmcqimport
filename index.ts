@@ -1,6 +1,12 @@
 import * as fs from "fs";
-import splitExport from "./utils/splitExport";
+import indexFlows from "./utils/indexFlows";
 
-const flow = JSON.parse(fs.readFileSync("flow-example.json").toString());
+const inputFile = JSON.parse(fs.readFileSync("test.json").toString());
 
-splitExport([flow]);
+const test = async () => {
+  let flows = await indexFlows(inputFile);
+  flows = flows.filter(f => f.questions > 50);
+  console.log("Gyldige eksamenssæt til eksport er:");
+  console.log(flows);
+};
+test();

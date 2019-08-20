@@ -1,17 +1,8 @@
 import { Flow, flowDecoder } from "../../interfaces/Flow";
 import { itemsDecoder } from "../../interfaces/Item";
 import { questionsDecoder } from "../../interfaces/Question";
-import { DecoderError } from "./runDecoder";
+import { ValidationError } from "../errors/errorHandler";
 import { checkFlow } from "./checkFlow";
-
-class ValidationError extends Error {
-  errors: DecoderError[];
-  constructor(err: { message: string; errors: DecoderError[] }) {
-    super();
-    this.name = "ValidationError";
-    this.errors = err.errors;
-  }
-}
 
 export const isValidFlow = async (flow: Flow): Promise<boolean> => {
   const checkedFlow = checkFlow({
