@@ -8,11 +8,15 @@ interface FlowIndex {
   activityId: number;
 }
 
-const indexFlows = (flows: Flow[]): FlowIndex[] => {
+const indexFlows = (flows: Flow[], removeShortFlows: boolean): FlowIndex[] => {
   let index: FlowIndex[] = [];
   let ids: number[] = [];
   flows.map(flow => {
     ids.push(flow.activityId);
+    const questionCount = calculateQuestionCount(flow);
+    if (removeShortFlows && questionCount < 50) {
+      return;
+    }
     index.push({
       title: flow.title,
       questions: calculateQuestionCount(flow),

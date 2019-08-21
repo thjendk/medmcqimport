@@ -3,11 +3,11 @@ import { Flow } from "../interfaces/Flow";
 import { getPreviousFlowIds } from "./getPreviousFlows";
 import indexFlows from "./indexFlows";
 
-export const printIndex = (flows: Flow[]) => {
+export const printIndex = (flows: Flow[], removeShortFlows: boolean) => {
   console.log("\n");
   console.log("Filen indeholder følgende flows:");
   const prevFlows = getPreviousFlowIds();
-  let index = indexFlows(flows);
+  let index = indexFlows(flows, removeShortFlows);
   //index = index.filter(f => f.questions > 50);
   index.forEach(({ title, questions, activityId }, i) => {
     let string = `${i}. ${title} (${questions} questions)`;

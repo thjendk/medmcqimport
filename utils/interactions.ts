@@ -10,6 +10,11 @@ export const askForFileAndReadIt = (): Flow[] => {
   return JSON.parse(fs.readFileSync(path).toString());
 };
 
+export const askForMinQuestionCount = (): boolean =>
+  readlineSync.keyInYN(
+    "\nVil du frasortere flows med færre end 50 spørgsmål?"
+  ) === true;
+
 export const askForIndices = () => {
   let indicesStr = readlineSync.question(
     `Hvilke flows skal eksporteres?

@@ -5,15 +5,21 @@ import { returnError } from "./utils/errors/errorHandler";
 import { Flow } from "./interfaces/Flow";
 
 import { printIndex } from "./utils/printIndex";
-import { askForIndices, askForFileAndReadIt } from "./utils/interactions";
+import {
+  askForIndices,
+  askForFileAndReadIt,
+  askForMinQuestionCount
+} from "./utils/interactions";
 
 const test = () => {
   console.log("\nmedMCQ WF-scripts\n");
   // Hent en fil og læs resultatet
-  const inputFile = askForFileAndReadIt();
+  let inputFile = askForFileAndReadIt();
 
+  const removeShortFlows = askForMinQuestionCount();
+  console.log(removeShortFlows);
   // Print alle flows i filen
-  printIndex(inputFile);
+  printIndex(inputFile, removeShortFlows);
   const indices: number[] = askForIndices();
 
   // Subset flows
