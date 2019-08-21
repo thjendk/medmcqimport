@@ -2,9 +2,11 @@
   "name": "medmcq-wf-scripts",
   "version": "1.0.0",
   "description": "A collection of scripts to help convert WiseFlow exports to a format acceptable to the medmcq website.",
-  "main": "build/index.js",
+  "main": "index.ts",
   "scripts": {
     "build": "rm -rf build/ && tsc",
+    "dev": "tsc -w",
+    "convert": "cd build && node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

@@ -3,6 +3,7 @@ convertWiseflow.js
 finishWiseflow.js
 flow-example.json
 test.json
+prevFlows.json
 # Logs
 logs
 *.log
