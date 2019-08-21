@@ -4,6 +4,8 @@ import { getPreviousFlowIds } from "./getPreviousFlows";
 import indexFlows from "./indexFlows";
 
 export const printIndex = (flows: Flow[]) => {
+  console.log("\n");
+  console.log("Filen indeholder følgende flows:");
   const prevFlows = getPreviousFlowIds();
   let index = indexFlows(flows);
   //index = index.filter(f => f.questions > 50);
@@ -17,4 +19,9 @@ export const printIndex = (flows: Flow[]) => {
     }
     console.log(coloredString);
   });
+  console.log("\n");
+  console.log(
+    `${colors.red("Røde linjer")} var også til stede i sidste eksport.`
+  );
+  console.log(`${colors.green("Grønne linjer")} er nye flows.\n`);
 };
