@@ -1,13 +1,34 @@
 import colors = require("colors/safe");
-import { DecoderError } from "../validation/runDecoder";
 export class ValidationError extends Error {
-  errors: DecoderError[];
-  constructor(err: { message: string; errors: DecoderError[] }) {
+  error: any;
+  constructor(err: { message: string; error: any }) {
     super();
     this.name = "ValidationError";
-    this.errors = err.errors;
+    this.error = err.error;
   }
 }
+
+interface CheckedFlow {
+  ok: boolean;
+  error: {
+    kind: string;
+    input: any;
+    at: string;
+    message: string;
+  };
+}
+
+export const returnError = (checkedFlow: CheckedFlow) =>
+  printError(
+    `${(checkedFlow.error.input.title || "").toUpperCase()}: IS NOT VALID!`,
+    {
+      checkedFlow: {
+        title: checkedFlow.error.input.title,
+        activityId: checkedFlow.error.input.activityId
+      },
+      error: checkedFlow.error
+    }
+  );
 
 export const printError = (message: string, errorObj: any): void => {
   console.error(colors.red(`🚨 ${message} 🚨`));

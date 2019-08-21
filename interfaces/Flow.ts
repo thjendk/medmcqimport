@@ -1,4 +1,4 @@
-import { Item } from "./Item";
+import { Item, itemsDecoder } from "./Item";
 import {
   Decoder,
   object,
@@ -32,7 +32,7 @@ export const flowDecoder: Decoder<Flow> = object({
   description: string(),
   tags: optional(oneOf(array(string()), constant(null))),
   type: number(),
-  items: anyJson(),
+  items: itemsDecoder,
   createdAt: number(),
   minScore: optional(oneOf(number(), constant(null))),
   maxScore: optional(oneOf(number(), constant(null))),

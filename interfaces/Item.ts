@@ -1,4 +1,4 @@
-import { Question } from "./Question";
+import { Question, questionsDecoder } from "./Question";
 import {
   Decoder,
   object,
@@ -30,7 +30,7 @@ export const itemsDecoder: Decoder<Item[]> = array(
     "i  d": optional(number()),
     index: number(),
     parentId: string(),
-    questions: anyJson(),
+    questions: questionsDecoder,
     showAsItem: number(),
     title: string(),
     tools: array(string())
