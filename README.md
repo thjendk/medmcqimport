@@ -4,11 +4,11 @@ Dette er en samling scripts, der konverterer et WiseFlow-eksport til en struktur
 
 ## Input
 
-Skal være en `json`-fil indeholdende et array af flows (se (Interfaces/Flow.ts)[src/Interfaces/Flow.ts] for strukturen).
+Skal være en `json`-fil indeholdende et array af flows (se [src/Interfaces/Flow.ts](src/Interfaces/Flow.ts) for strukturen).
 
 ## Output
 
-Er en graph af følgende struktur (se (src/utils/parseFlow.ts)[src/utils/parseFlow.ts] for detaljer):
+Er en graph af følgende struktur (se [src/utils/parseFlow.ts](src/utils/parseFlow.ts) for detaljer):
 
 ```
 {
