@@ -17,7 +17,7 @@ const test = () => {
   let inputFile = askForFileAndReadIt();
 
   const removeShortFlows = askForMinQuestionCount();
-  console.log(removeShortFlows);
+  console.log(removeShortFlows ? "ja" : "nej");
   // Print alle flows i filen
   printIndex(inputFile, removeShortFlows);
   const indices: number[] = askForIndices();
