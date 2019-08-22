@@ -10,15 +10,21 @@ export const askForFileAndReadIt = (): Flow[] => {
   return JSON.parse(fs.readFileSync(path).toString());
 };
 
-export const askForMinQuestionCount = (): boolean =>
-  readlineSync.keyInYN(
-    "\nVil du frasortere flows med færre end 50 spørgsmål?"
-  ) === true;
+export const askForMinQuestionCount = (): boolean => {
+  const input = readlineSync.question(
+    "\nVil du frasortere flows med færre end 50 spørgsmål? [Y/n]: ",
+    {
+      limit: /^[yn]\s*$|^$/i,
+      limitMessage: "Indtast et Y/[enter] for ja, N for nej"
+    }
+  );
+  return input === "Y" || input === "";
+};
 
 export const askForIndices = () => {
   let indicesStr = readlineSync.question(
     `Hvilke flows skal eksporteres?
-(kommasepareret: 0, 1, 2 ...)
+(kommasepareret: 0,1,2, ...)
 > `,
     {
       limit: /^(([0-9]){1}[, ]*)+$/,
