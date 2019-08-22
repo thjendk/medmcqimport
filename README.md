@@ -38,4 +38,4 @@ Filerne gemmes i `output`-mappen sammen med evt. billeder.
 
 1. `npm install`
 2. `npm run build`
-3. `node run convert`
+3. `npm run convert`
