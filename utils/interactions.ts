@@ -7,7 +7,12 @@ export const askForFileAndReadIt = (): Flow[] => {
     limit: /\.json$/i,
     limitMessage: "Det var ikke en gyldig .JSON-fil. Prøv igen, tak!"
   });
-  return JSON.parse(fs.readFileSync(path).toString());
+  return JSON.parse(
+    fs
+      .readFileSync(path)
+      .toString()
+      .trim()
+  );
 };
 
 export const askForMinQuestionCount = (): boolean => {

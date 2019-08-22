@@ -44,6 +44,7 @@ export const parseQuestion = (
   let image = stimulus.match(imgRegex);
   if (image) {
     parsedQuestion.image = image[1];
+    // fjern billed-tagget fra teksten
     stimulus = stimulus.replace(imgRegex, "");
   }
 
