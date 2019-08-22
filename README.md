@@ -26,7 +26,7 @@ Er en graph af følgende struktur (se [src/utils/parseFlow.ts](src/utils/parseFl
                 { answer }
             ],
             examSetQno
-        }
+        }, ... 
     ]
 
 }
