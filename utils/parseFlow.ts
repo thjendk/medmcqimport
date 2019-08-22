@@ -1,7 +1,10 @@
+import request = require("request-promise");
+import colors = require("colors/safe");
 import * as fs from "fs";
 import { Flow } from "../interfaces/Flow";
 import { Question } from "../interfaces/Question";
 import { parseQuestion, ParsedQuestion } from "./parseQuestion";
+import { questionNewPassword } from "readline-sync";
 
 // Grimt typecheck fix med number hhv. string tilladt :-(
 interface ExamSetMetadata {
@@ -15,7 +18,7 @@ class ExamSet {
   semesterName: "Inf" | "Abd" | "HLK" | "GOP" | undefined;
   season: "E" | "F" | string | undefined;
   year: number | undefined;
-  questions: ParsedQuestion[] | undefined;
+  questions: ParsedQuestion[] = [];
 
   fillMetadata(metadata: ExamSetMetadata) {
     let semesterId: ExamSet["semesterId"];
@@ -35,7 +38,7 @@ class ExamSet {
         semesterName = "HLK";
         break;
       case 11:
-        semesterId = 1;
+        semesterId = 4;
         semesterName = "GOP";
         break;
     }
@@ -45,6 +48,49 @@ class ExamSet {
     this.season = metadata.exam.season;
     this.year = metadata.exam.year;
   }
+  stringifySetInfo() {
+    return `${this.semesterName}-${this.year}${this.season}`;
+  }
+
+  downloadImages() {
+    if (this.semesterId === 4) {
+      console.log(colors.yellow("Fjerner billeder, da det er 11. semester"));
+      this.questions = this.questions.map(question => {
+        delete question.image;
+        return question;
+      });
+    } else {
+      this.questions = this.questions.map(question => {
+        if (question.image) {
+          if (!fs.existsSync("examsets/images"))
+            fs.mkdirSync("examsets/images", { recursive: true });
+          const imageName = `${this.stringifySetInfo()}-${
+            question.examSetQno
+          }.jpg`;
+
+          request({ uri: question.image, encoding: "binary" })
+            .then(body => {
+              const imageFile = fs.createWriteStream(
+                `examsets/images/${imageName}`
+              );
+              imageFile.write(body, "binary");
+              imageFile.end();
+              question.image = imageName;
+            })
+            .catch(() => {
+              console.error(
+                colors.red(
+                  "Kunne ikke hente billede til spørgsmål " +
+                    question.examSetQno
+                )
+              );
+            });
+        }
+        return question;
+      });
+    }
+  }
+
   toJSON() {
     return JSON.stringify({
       semesterId: this.semesterId,
@@ -56,7 +102,10 @@ class ExamSet {
 
   writeToFile() {
     if (!fs.existsSync("examsets")) fs.mkdirSync("examsets");
-    let fileName = `examsets/${this.semesterName}-${this.year}${this.season}-${
+
+    this.downloadImages();
+
+    let fileName = `examsets/${this.stringifySetInfo()}-${
       this.activityId
     }.json`;
     fs.writeFileSync(fileName, this.toJSON());

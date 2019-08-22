@@ -49,10 +49,13 @@ export const parseQuestion = (
   }
 
   // Tekst
-  // fjern Item-overskrift
-  parsedQuestion.text = stimulus.replace(/^<p>Item [0-9]{1,2}<\/p>/, "");
   // Konverter HTML til markdown
-  parsedQuestion.text = turndownService.turndown(parsedQuestion.text);
+  parsedQuestion.text = turndownService.turndown(stimulus);
+  // fjern Item-overskrift
+  parsedQuestion.text = parsedQuestion.text.replace(
+    /^\s*Item [0-9]{1,2}\s*/,
+    ""
+  );
   // Svar og korrekte svar
   parsedQuestion.fillAnswers(parseQuestionAnswers(questionRaw));
 
