@@ -7,9 +7,10 @@ export const printIndex = (flows: Flow[], removeShortFlows: boolean) => {
   console.log("\n");
   console.log("Filen indeholder følgende flows:");
   const prevFlows = getPreviousFlowIds();
-  let index = indexFlows(flows, removeShortFlows);
+  let index = indexFlows(flows);
   //index = index.filter(f => f.questions > 50);
   index.forEach(({ title, questions, activityId }, i) => {
+    if (removeShortFlows && questions < 50) return;
     let string = `${i}. ${title} (${questions} questions)`;
     let coloredString;
     if (prevFlows.includes(activityId)) {

@@ -36,3 +36,30 @@ export const askForIndices = () => {
   let indices = indicesStr.split(",");
   return indices.map(i => Number(i));
 };
+
+export const askForSemester = (): number => {
+  const sem = readlineSync.question(
+    "Hvilket semester er spørgsmålet fra? [7|8|9|11] : ",
+    {
+      limit: [7, 8, 9, 11],
+      limitMessage: "Gyldige semestre er: 7, 8, 9 og 11."
+    }
+  );
+  return Number(sem);
+};
+
+export const askForExam = (): { year: number; season: string } => {
+  console.log("");
+  console.log("");
+  const exam = readlineSync.question(
+    "Hvilken eksamen er flowet fra? [YYYY/(E|F)] : \n> ",
+    {
+      limit: /^[0-9]{4}\/[EF]$/i,
+      limitMessage:
+        "Formen skal være fx 2019/F eller 2019/E for hhv. 2019 forår/efterår"
+    }
+  );
+  const year = Number(exam.substring(0, 4));
+  const season = exam.substring(5, 6).toUpperCase();
+  return { year, season };
+};
