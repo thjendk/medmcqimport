@@ -15,7 +15,7 @@ Er en graph af følgende struktur (se [src/utils/parseFlow.ts](src/utils/parseFl
     semesterId,
     season,
     year,
-    question: [
+    questions: [
         {
             text,
             answer1,
