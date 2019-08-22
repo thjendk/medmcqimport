@@ -4,7 +4,7 @@ Dette er en samling scripts, der konverterer et WiseFlow-eksport til en struktur
 
 ## Input
 
-Skal være en `json`-fil indeholdende et array af flows (se [src/Interfaces/Flow.ts](src/Interfaces/Flow.ts) for strukturen).
+Skal være en `json`-fil indeholdende et array af flows (se [src/Interfaces/Flow.ts](src/interfaces/Flow.ts) for strukturen).
 
 ## Output
 
