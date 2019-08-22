@@ -1,5 +1,5 @@
 import colors = require("colors/safe");
-
+import * as path from "path";
 import { validateFlow } from "./utils/validation/isValidFlow";
 import { returnError } from "./utils/errors/errorHandler";
 import { Flow } from "./interfaces/Flow";
@@ -15,7 +15,9 @@ import {
   askForExam
 } from "./utils/interactions";
 
-const test = () => {
+export const rootPath = path.resolve(__dirname, "..");
+
+const convert = () => {
   console.log("\nmedMCQ WF-scripts\n");
   // Hent en fil og læs resultatet
   let inputFile = askForFileAndReadIt();
@@ -45,5 +47,12 @@ const test = () => {
     const examSet = parseFlow(flow, { semester, exam });
     examSet.writeToFile();
   });
+
+  console.log(
+    colors.red(
+      "\nHusk at tjekke evt. billeder for personhenførbare oplysninger!"
+    )
+  );
 };
-test();
+convert();
+console.log(rootPath);

@@ -1,6 +1,5 @@
 build
-convertWiseflow.js
-finishWiseflow.js
+output
 *.json
 # Logs
 logs

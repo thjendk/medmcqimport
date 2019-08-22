@@ -4,9 +4,10 @@ import { Flow } from "../interfaces/Flow";
 
 export const askForFileAndReadIt = (): Flow[] => {
   const path = readlineSync.questionPath("Hvilken fil skal analyseres?\n> ", {
-    limit: /\.json$/i,
+    isFile: true,
     limitMessage: "Det var ikke en gyldig .JSON-fil. Prøv igen, tak!"
   });
+
   return JSON.parse(
     fs
       .readFileSync(path)

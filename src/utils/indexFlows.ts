@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import { rootPath } from "../index";
 import { Flow } from "../interfaces/Flow";
 import { calculateQuestionCount } from "./validation/calculateQuestionCount";
 
@@ -19,7 +20,8 @@ const indexFlows = (flows: Flow[]): FlowIndex[] => {
       activityId: flow.activityId
     });
   });
-  fs.writeFileSync("prevFlows.json", JSON.stringify(ids));
+  if (!fs.existsSync(rootPath + "/output")) fs.mkdirSync(rootPath + "/output");
+  fs.writeFileSync(rootPath + "/output/.prevFlows.json", JSON.stringify(ids));
   return index;
 };
 

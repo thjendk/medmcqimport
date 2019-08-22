@@ -4,7 +4,7 @@ import * as fs from "fs";
 import { Flow } from "../interfaces/Flow";
 import { Question } from "../interfaces/Question";
 import { parseQuestion, ParsedQuestion } from "./parseQuestion";
-import { questionNewPassword } from "readline-sync";
+import { rootPath } from "../index";
 
 // Grimt typecheck fix med number hhv. string tilladt :-(
 interface ExamSetMetadata {
@@ -62,17 +62,15 @@ class ExamSet {
     } else {
       this.questions = this.questions.map(question => {
         if (question.image) {
-          if (!fs.existsSync("examsets/images"))
-            fs.mkdirSync("examsets/images", { recursive: true });
+          let imgDir = rootPath + "/output/images";
+          if (!fs.existsSync(imgDir)) fs.mkdirSync(imgDir, { recursive: true });
           const imageName = `${this.stringifySetInfo()}-${
             question.examSetQno
           }.jpg`;
 
           request({ uri: question.image, encoding: "binary" })
             .then(body => {
-              const imageFile = fs.createWriteStream(
-                `examsets/images/${imageName}`
-              );
+              const imageFile = fs.createWriteStream(`${imgDir}/${imageName}`);
               imageFile.write(body, "binary");
               imageFile.end();
               question.image = imageName;
@@ -101,11 +99,12 @@ class ExamSet {
   }
 
   writeToFile() {
-    if (!fs.existsSync("examsets")) fs.mkdirSync("examsets");
+    if (!fs.existsSync(rootPath + "/output"))
+      fs.mkdirSync(rootPath + "/output");
 
     this.downloadImages();
 
-    let fileName = `examsets/${this.stringifySetInfo()}-${
+    let fileName = `${rootPath}/output/${this.stringifySetInfo()}-${
       this.activityId
     }.json`;
     fs.writeFileSync(fileName, this.toJSON());
