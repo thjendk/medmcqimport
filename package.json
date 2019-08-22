@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rm -rf build/ && tsc",
     "dev": "tsc -w",
-    "convert": "cd build && node .",
+    "start": "node .",
+    "convert": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

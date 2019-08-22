@@ -54,5 +54,5 @@ const convert = () => {
     )
   );
 };
+
 convert();
-console.log(rootPath);
