@@ -15,10 +15,13 @@ export class QuestionAnswers {
   answer3: string = "";
   correctAnswers: CorrectAnswer[] = [];
 }
+export interface Image {
+  link: string;
+}
+
 export class ParsedQuestion extends QuestionAnswers {
   text: string = "";
-
-  image: string | undefined;
+  images: Image[] = [];
   examSetQno: number = 0;
 
   fillAnswers({ answer1, answer2, answer3, correctAnswers }: QuestionAnswers) {
@@ -43,7 +46,7 @@ export const parseQuestion = (
   const imgRegex = /<img src=\"(.*?)\".*?>/;
   let image = stimulus.match(imgRegex);
   if (image) {
-    parsedQuestion.image = image[1];
+    parsedQuestion.images = [{ link: image[1] }];
     // fjern billed-tagget fra teksten
     stimulus = stimulus.replace(imgRegex, "");
   }

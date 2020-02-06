@@ -56,24 +56,24 @@ class ExamSet {
     if (this.semesterId === 4) {
       console.log(colors.yellow("Fjerner billeder, da det er 11. semester"));
       this.questions = this.questions.map(question => {
-        delete question.image;
+        delete question.images;
         return question;
       });
     } else {
       this.questions = this.questions.map(question => {
-        if (question.image) {
+        if (question.images.length > 0) {
           let imgDir = rootPath + "/output/images";
           if (!fs.existsSync(imgDir)) fs.mkdirSync(imgDir, { recursive: true });
           const imageName = `${this.stringifySetInfo()}-${
             question.examSetQno
           }.jpg`;
 
-          request({ uri: question.image, encoding: "binary" })
+          request({ uri: question.images[0].link, encoding: "binary" })
             .then(body => {
               const imageFile = fs.createWriteStream(`${imgDir}/${imageName}`);
               imageFile.write(body, "binary");
               imageFile.end();
-              question.image = imageName;
+              question.images[0].link = imageName;
             })
             .catch(() => {
               console.error(
