@@ -56,7 +56,7 @@ class ExamSet {
     if (this.semesterId === 4) {
       console.log(colors.yellow("Fjerner billeder, da det er 11. semester"));
       this.questions = this.questions.map(question => {
-        delete question.images;
+        question.images = [];
         return question;
       });
     } else {
