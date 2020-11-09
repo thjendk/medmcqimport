@@ -17,7 +17,7 @@ import {
 
 export const rootPath = path.resolve(__dirname, "..");
 
-const convert = () => {
+const convert = async () => {
   console.log("\nmedMCQ WF-scripts\n");
   // Hent en fil og læs resultatet
   let inputFile = askForFileAndReadIt();
@@ -30,7 +30,7 @@ const convert = () => {
 
   // Subset flows
   const flows: Flow[] = indices.map(index => inputFile[index]);
-  flows.forEach(flow => {
+  flows.forEach(async flow => {
     // For at undgå undefined errors ved dårligt indeks
     if (!flow) return;
     console.log(colors.yellow("\n================================"));
@@ -45,7 +45,7 @@ const convert = () => {
     const exam = askForExam();
 
     const examSet = parseFlow(flow, { semester, exam });
-    examSet.writeToFile();
+    await examSet.writeToFile();
   });
 
   console.log(

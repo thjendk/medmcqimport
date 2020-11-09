@@ -52,7 +52,7 @@ class ExamSet {
     return `${this.semesterName}-${this.year}${this.season}`;
   }
 
-  downloadImages() {
+ async downloadImages() {
     if (this.semesterId === 4) {
       console.log(colors.yellow("Fjerner billeder, da det er 11. semester"));
       this.questions = this.questions.map(question => {
@@ -60,16 +60,16 @@ class ExamSet {
         return question;
       });
     } else {
-      this.questions = this.questions.map(question => {
+      this.questions = await Promise.all(this.questions.map(async question => {
         if (question.images.length > 0) {
           let imgDir = rootPath + "/output/images";
           if (!fs.existsSync(imgDir)) fs.mkdirSync(imgDir, { recursive: true });
           const imageName = `${this.stringifySetInfo()}-${
             question.examSetQno
           }.jpg`;
-
-          request({ uri: question.images[0].link, encoding: "binary" })
-            .then(body => {
+          
+          await request({ uri: question.images[0].link, encoding: "binary" })
+          .then(body => {
               const imageFile = fs.createWriteStream(`${imgDir}/${imageName}`);
               imageFile.write(body, "binary");
               imageFile.end();
@@ -79,13 +79,13 @@ class ExamSet {
               console.error(
                 colors.red(
                   "Kunne ikke hente billede til spørgsmål " +
-                    question.examSetQno
-                )
-              );
-            });
-        }
+                  question.examSetQno
+                  )
+                  );
+                });
+              }
         return question;
-      });
+      }));
     }
   }
 
@@ -98,11 +98,11 @@ class ExamSet {
     });
   }
 
-  writeToFile() {
+  async writeToFile() {
     if (!fs.existsSync(rootPath + "/output"))
       fs.mkdirSync(rootPath + "/output");
 
-    this.downloadImages();
+    await this.downloadImages();
 
     let fileName = `${rootPath}/output/${this.stringifySetInfo()}-${
       this.activityId
