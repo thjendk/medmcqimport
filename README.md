@@ -1,4 +1,4 @@
-# WF-scripts
+# MedMCQ import
 
 Dette er en samling scripts, der konverterer et WiseFlow-eksport til en struktur, medMCQ kan håndtere.
 
